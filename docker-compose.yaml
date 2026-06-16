@@ -1,0 +1,63 @@
+services:
+
+  auth-service:
+    container_name: auth_container
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    ports:
+      - "5001:5001"
+    env_file:
+      - ./auth-service/.env
+    restart: on-failure
+
+  seller-service:
+    container_name: seller_container
+    build:
+      context: ./seller-service
+      dockerfile: Dockerfile
+    ports:
+      - "5002:5002"
+    env_file:
+      - ./seller-service/.env
+    restart: on-failure
+
+  customer-service:
+    container_name: customer_container
+    build:
+      context: ./customer-service
+      dockerfile: Dockerfile
+    ports:
+      - "5003:5003"
+    env_file:
+      - ./customer-service/.env
+    restart: on-failure
+
+  api-gateway:
+    container_name: gateway_container
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    env_file:
+      - ./api-gateway/.env
+    environment:
+      - AUTH_SERVICE_URL=http://auth-service:5001
+      - SELLER_SERVICE_URL=http://seller-service:5002
+      - CUSTOMER_SERVICE_URL=http://customer-service:5003
+    depends_on:
+      - auth-service
+      - seller-service
+      - customer-service
+    restart: on-failure
+
+
+
+
+
+
+
+
+
+

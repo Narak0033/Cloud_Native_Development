@@ -1,0 +1,8 @@
+FROM --platform=linux/amd64 node:24-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci --omit=dev
+COPY . .
+EXPOSE 5001
+USER node
+CMD ["npm", "start"]
