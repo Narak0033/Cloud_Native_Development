@@ -10,7 +10,7 @@ require('./dbconnect');
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // POST /auth/register
-app.post('/auth/register', async (req, res) => {
+app.post('/register', async (req, res) => {
     try {
         const existing = await UserModel.findOne({ email: req.body.email });
         if (existing) return res.status(400).json({ message: 'Email already registered' });
@@ -29,7 +29,7 @@ app.post('/auth/register', async (req, res) => {
 });
 
 // POST /auth/login
-app.post('/auth/login', async (req, res) => {
+app.post('/login', async (req, res) => {
     try {
         const user = await UserModel.findOne({
             email:    req.body.email,

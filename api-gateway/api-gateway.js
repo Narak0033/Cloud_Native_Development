@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-app.use(express.json());
 
 const httpProxy = require('http-proxy');
 const proxy = httpProxy.createProxyServer();

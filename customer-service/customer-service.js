@@ -7,7 +7,7 @@ const BookModel  = require('./book-schema');
 const OrderModel = require('./order-schema');
 
 // GET /customer/books — browse all available books
-app.get('/customer/books', async (req, res) => {
+app.get('/books', async (req, res) => {
     try {
         const books = await BookModel.find({ stock: { $gt: 0 } });
         res.status(200).json(books);
@@ -17,7 +17,7 @@ app.get('/customer/books', async (req, res) => {
 });
 
 // POST /customer/cart/add — add a book to cart
-app.post('/customer/cart/add', async (req, res) => {
+app.post('/cart/add', async (req, res) => {
     try {
         const { bookId, quantity, customerEmail } = req.body;
 
@@ -48,7 +48,7 @@ app.post('/customer/cart/add', async (req, res) => {
 });
 
 // GET /customer/cart — view current cart
-app.get('/customer/cart', async (req, res) => {
+app.get('/cart', async (req, res) => {
     try {
         const { customerEmail } = req.query;
         const cart = await OrderModel.findOne({ customerEmail, status: 'cart' });
@@ -60,7 +60,7 @@ app.get('/customer/cart', async (req, res) => {
 });
 
 // DELETE /customer/cart/remove — remove a book from cart
-app.delete('/customer/cart/remove', async (req, res) => {
+app.delete('/cart/remove', async (req, res) => {
     try {
         const { bookId, customerEmail } = req.body;
 
@@ -77,7 +77,7 @@ app.delete('/customer/cart/remove', async (req, res) => {
 });
 
 // POST /customer/order/place — confirm cart into a real order
-app.post('/customer/order/place', async (req, res) => {
+app.post('/order/place', async (req, res) => {
     try {
         const { customerEmail } = req.body;
 
@@ -103,7 +103,7 @@ app.post('/customer/order/place', async (req, res) => {
 });
 
 // GET /customer/orders — view all confirmed orders for this customer
-app.get('/customer/orders', async (req, res) => {
+app.get('/orders', async (req, res) => {
     try {
         const { customerEmail } = req.query;
         const orders = await OrderModel.find({ customerEmail, status: 'confirmed' });

@@ -7,7 +7,7 @@ const BookModel  = require('./book-schema');
 const OrderModel = require('./order-schema');
 
 // POST /seller/books — add a new book
-app.post('/seller/books', async (req, res) => {
+app.post('/books', async (req, res) => {
     try {
         const book = new BookModel({
             title:       req.body.title,
@@ -24,7 +24,7 @@ app.post('/seller/books', async (req, res) => {
 });
 
 // GET /seller/books — view all books
-app.get('/seller/books', async (req, res) => {
+app.get('/books', async (req, res) => {
     try {
         const books = await BookModel.find();
         res.status(200).json(books);
@@ -34,7 +34,7 @@ app.get('/seller/books', async (req, res) => {
 });
 
 // PUT /seller/books/:id — update book info or stock
-app.put('/seller/books/:id', async (req, res) => {
+app.put('/books/:id', async (req, res) => {
     try {
         const updated = await BookModel.findByIdAndUpdate(
             req.params.id,
@@ -49,7 +49,7 @@ app.put('/seller/books/:id', async (req, res) => {
 });
 
 // DELETE /seller/books/:id — remove a book
-app.delete('/seller/books/:id', async (req, res) => {
+app.delete('/books/:id', async (req, res) => {
     try {
         const deleted = await BookModel.findByIdAndDelete(req.params.id);
         if (!deleted) return res.status(404).json({ message: 'Book not found' });
@@ -60,7 +60,7 @@ app.delete('/seller/books/:id', async (req, res) => {
 });
 
 // GET /seller/orders — view all customer orders
-app.get('/seller/orders', async (req, res) => {
+app.get('/orders', async (req, res) => {
     try {
         const orders = await OrderModel.find();
         res.status(200).json(orders);
